@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BMI Calculator</title>
+	<style>
+		*{ margin:0; padding:0;  box-sizing: border-box; border: none; font-family: 'Fira Code';}
+		*:focus{ outline: none; }
+		::selection{ background-color: #000; color: #fff; }
+		.wrap{ width:40%; height: 100vh; background-color: #333; color:#fff; margin: 0 auto; padding: 140px 30px 30px 30px; text-align: center;}
+		h1{ margin-bottom: 12px; }
+		input[type="number"]{ padding:10px 8px; width:100%; margin-bottom: 10px; text-align: center; font-size: 1.5em;}
+		button{ padding:12px 10px; background-color: #05b169; color:#fff; font-size: 1.5em; margin-top: 10px; cursor: pointer; width: 100%;}
+		#result{ font-size: 3em;}
+		/*
+			Modal
+		*/
+		#myMap{transition: all .5s; position: fixed; top: -1100px; left: 30%;margin-top: 180px; z-index: 1; width: 40%; height: 55vh;  padding: 10px 8px; background-color: #f1f1f1;}
+		p{ font-weight: thin; font-size: 1.5em; margin-bottom: 20px;}
+		#mapBtn{ width:20%; margin-bottom:30px; margin-left: -80%; margin-top: -40%; background-color: #333; border-bottom: 2px solid #fff; padding: 4px;}
+		.close{ float:right; font-size: 32px; font-weight: bold; }
+		.close:hover{ cursor:pointer; }
+		
+		/*  Media Query  */ 
+		@media screen and (max-width: 768px) {
+		  .wrap { width: 100%;}
+		  #myMap{ width: 95%; margin-top: 170px; left:2.5%;}
+		  #title{ font-size: 24px; letter-spacing: 5px;}
+		  p{ font-size: 15px; margin-bottom: 15px; text-align: left;}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="wrap">
+		<button id="mapBtn">MAP</button>
+		<h1 id="title">BMI  Calculator</h1>
+		<input id="wieght" type="number" placeholder="Weight in kg">
+		<input id="height" type="number" placeholder="Height in cm">
+		<button onclick="bmiCal();">Calculate</button><br>
+		<button onclick="reset();" style="background-color: #e60a0a;">Reset</button><br>
+		<span id="result">...</span>
+	</div>
+
+	<div id="myMap">
+		<span class="close">&times;</span>
+		<h2 style="margin-bottom: 30px;"> BMI MAP </h2>
+		<p>Under 18.5 -> <span style="background: #000; color: yellow; padding: 5px 4px;"> Underweight</span></p>
+		<p>Between 18.5 To 24.5 -> <span style="color: green; padding: 5px 4px;"> Normal</span></p>
+		<p>Between 25 To 29.9 -> <span style="background: #000; color: orange; padding: 5px 4px;"> Overweight</span></p>
+		<p>Over 30 -> <span style="background: #000; color: red; padding: 5px 4px;"> Corpulent</span></p>
+	</div>
+
+	<script>
+		
+		
+		function bmiCal(){
+			var wieght = Number(document.getElementById("wieght").value);
+			var height = Number(document.getElementById("height").value);
+			var bmi = wieght / Math.pow(height, 2);
+			bmi = Math.floor(bmi);
+			document.getElementById("result").innerHTML = bmi;
+		}
+
+		function reset(){
+			//  Reload the page
+			window.location.reload();
+		}
+
+		// Get The Map
+		var mymap = document.getElementById("myMap");
+		// Get The button
+		var btn = document.getElementById("mapBtn");
+		var span = document.getElementsByClassName("close")[0];
+
+		btn.onclick = function() {
+		  mymap.style.top = 0;
+		}
+
+		span.onclick = function() {
+		  mymap.style.top = "-1100px";
+		}
+
+		window.onclick = function(event) {
+		  if (event.target == mymap) {
+		    mymap.style.top = "-1100px";
+		  }
+		}
+	</script>
+</body>
+</html>
